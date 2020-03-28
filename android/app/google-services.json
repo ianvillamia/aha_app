@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "644899926483",
+    "firebase_url": "https://aha-app-95283.firebaseio.com",
+    "project_id": "aha-app-95283",
+    "storage_bucket": "aha-app-95283.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:644899926483:android:a845162f15e4bc310e7f26",
+        "android_client_info": {
+          "package_name": "com.example.aha_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "644899926483-tbbe06niaevphn8qpijmpnfsmj9tk75t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLabXB9SxNGOGb6yx0kP2MayOgvQY1vs8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "644899926483-tbbe06niaevphn8qpijmpnfsmj9tk75t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
