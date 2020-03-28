@@ -27,6 +27,11 @@ class _ImageCaptureState extends State<ImageCapture> {
       _image = image;
     });
   }
+  void reset(){
+    setState(() {
+   _image=null;
+    });
+  }
 
   Future<CloudStorageResult> uploadImage({
   @required File image, 
@@ -50,6 +55,9 @@ class _ImageCaptureState extends State<ImageCapture> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Image Picker Example'),
+      actions: <Widget>[
+        MaterialButton(onPressed: ()=>reset,child:Text('Reset'))
+      ],
       ),
       body: Center(
         child: _image == null ? Text('No image selected.') : Image.file(_image),
