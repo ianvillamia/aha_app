@@ -1,6 +1,6 @@
-import 'package:aha_app/cart.dart';
+
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import './imageCapture.dart';
 
 
 void main() {
@@ -14,23 +14,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-      
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(),
-    );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({Key key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        
-      ),
+      home: ImageCapture()
     );
   }
 }
