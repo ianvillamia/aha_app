@@ -1,6 +1,6 @@
 import 'package:aha_app/Screens/Auth/sign_in.dart';
 import 'package:aha_app/Screens/home.dart';
-import 'package:aha_app/Services/auth.dart';
+import 'package:aha_app/Services/authentication_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -10,7 +10,7 @@ class AuthHandler extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authService =
-        Provider.of<FirebaseAuthentication>(context, listen: false);
+        Provider.of<FirebaseAuthenticationService>(context, listen: false);
 
     return StreamBuilder(
       stream: authService.onAuthChanged,

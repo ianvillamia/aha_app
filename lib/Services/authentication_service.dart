@@ -7,7 +7,7 @@ class User {
   final String uid;
 }
 
-class FirebaseAuthentication {
+class FirebaseAuthenticationService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   User _userFromFirebase(FirebaseUser user){
