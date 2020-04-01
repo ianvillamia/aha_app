@@ -1,5 +1,4 @@
-import 'package:aha_app/Screens/Auth/auth_handler.dart';
-import 'package:aha_app/Services/authentication_service.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -11,15 +10,6 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return Provider<FirebaseAuthenticationService>(
-      create: (_) => FirebaseAuthenticationService(),
-      child: MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: AuthHandler(),
-      ),
-    );
+    return Container();
   }
 }
