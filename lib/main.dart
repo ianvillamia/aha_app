@@ -2,8 +2,12 @@
 import 'package:flutter/material.dart';
 // import 'package:aha_app/homepage.dart';
 import 'package:aha_app/routes.dart';
-
+import 'package:flutter/services.dart';
 void main() {
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarBrightness: Brightness.light));
+
   FluroRouter.setupRouter();
   runApp(MyApp());
 }
@@ -13,6 +17,7 @@ class MyApp extends StatelessWidget {
    @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       initialRoute: '/home',
       onGenerateRoute: FluroRouter.router.generator,
       // home: Login(),
