@@ -15,6 +15,7 @@ class _HomepageState extends State<Homepage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,
         title: Text('Devotional',
           style: GoogleFonts.pacifico(
@@ -31,17 +32,28 @@ class _HomepageState extends State<Homepage> {
       
         child: Column(
           children: [
-            buildButton(function: (){}, 
+            buildButton(function: (){
+              Navigator.pushNamed(context, '/morningDevo');
+            }, 
               size: size,color: Color(0xFFFFDC34), 
               icon: FontAwesomeIcons.sun, 
-              text: 'Morning Reading'),
+              text: 'Morning Reading',
+              textColor: Color(0xFF110133)),
+            SizedBox(height: 50,),
+
+            buildButton(function: (){
+              Navigator.pushNamed(context, '/eveningDevo');
+            },
+            size:size,color: Color(0xFF000000),
+            icon: FontAwesomeIcons.moon, 
+            text: 'Evening Reading', textColor: Colors.white),
             SizedBox(height: 50,),
 
             buildButton(function: (){},
-            size:size,color: Color(0xFF00918e),
-            icon: FontAwesomeIcons.moon, text: 'Evening Reading'),
-            SizedBox(height: 50,),
-            buildButton(function: (){},size:size,color: Color(0xFF4DD599),icon: FontAwesomeIcons.calendarCheck,text: 'Today’s Devotion'),
+            size:size,
+            color: Color(0xFF4DD599),
+            icon: FontAwesomeIcons.calendarCheck,
+            text: 'Today’s Devotion', textColor: Color(0xFF110133)),
             
           ],
         ),
@@ -49,7 +61,7 @@ class _HomepageState extends State<Homepage> {
       bottomNavigationBar: BottomBar(),
     );
   }
-  buildButton({@required Function function, @required size, @required IconData icon, @required String text, @required Color color}){
+  buildButton({@required Function function, @required size, @required IconData icon, @required String text, @required Color color, @required Color textColor}){
     return Material(
           color: color,
           child: InkWell(
@@ -63,13 +75,14 @@ class _HomepageState extends State<Homepage> {
                   children: [
                   Icon(icon,
                     size: 42.0,
+                    color: textColor,
                   ),
                   SizedBox(
                     width: 30.0,
                   ),
                   Text(text,
                     style: GoogleFonts.quicksand(
-                      textStyle: TextStyle(color: Color(0xFF110133)),
+                      textStyle: TextStyle(color: textColor),
                       fontSize: 25.0,
                     ),
                     )

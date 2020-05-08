@@ -19,6 +19,12 @@ class _BottomBarState extends State<BottomBar> {
         setState(() {
           selected=index;
           print(selected);
+
+          if (selected == 0) {
+            Navigator.pushNamed(context, '/home');
+          } else if(selected == 1){
+            
+          }
         });
       },
         items: <BottomNavigationBarItem>[
