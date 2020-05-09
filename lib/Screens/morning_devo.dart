@@ -93,7 +93,7 @@ class _MorningDevotionState extends State<MorningDevotion> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                boldText(text: book + ":" + chapter, fontSize: 20),
+                boldText(text: book +" " + chapter, fontSize: 35),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 25),
                   child: boldText(text: output, fontSize: 20),
