@@ -1,7 +1,9 @@
 
+import 'package:aha_app/Screens/morning_devo.dart';
+import 'package:aha_app/Services/Api/sample_call.dart';
+import 'package:aha_app/Services/Routing/routes.dart';
 import 'package:flutter/material.dart';
 // import 'package:aha_app/homepage.dart';
-import 'package:aha_app/routes.dart';
 import 'package:flutter/services.dart';
 void main() {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -18,9 +20,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: '/home',
-      onGenerateRoute: FluroRouter.router.generator,
+      // initialRoute: '/home',
+      // onGenerateRoute: FluroRouter.router.generator,
       // home: Login(),
+      home: MorningDevotion(),
     );
   }
 }

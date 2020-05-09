@@ -1,8 +1,8 @@
+import 'package:aha_app/Screens/evening_devo.dart';
+import 'package:aha_app/Screens/homepage.dart';
+import 'package:aha_app/Screens/morning_devo.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
-import 'package:aha_app/homepage.dart';
-import 'package:aha_app/morning_devo.dart';
-import 'package:aha_app/evening_devo.dart';
 
 class FluroRouter {
   static Router router = Router();

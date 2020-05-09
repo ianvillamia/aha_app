@@ -1,7 +1,7 @@
+import 'package:aha_app/Widgets/bottomBar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:aha_app/bottomBar.dart';
 
 class EveningDevotion extends StatefulWidget {
   @override
