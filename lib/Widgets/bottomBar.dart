@@ -1,7 +1,8 @@
+import 'package:aha_app/Providers/navigationProvider.dart';
+import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
-
+import 'package:provider/provider.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 class BottomBar extends StatefulWidget {
   BottomBar({Key key}) : super(key: key);
 
@@ -10,49 +11,68 @@ class BottomBar extends StatefulWidget {
 }
 
 class _BottomBarState extends State<BottomBar> {
-  int selected = 0;
+
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar( 
-      currentIndex: selected,
-      onTap: (index){
-        setState(() {
-          selected=index;
-          print(selected);
-
-          if (selected == 0) {
-            Navigator.pushNamed(context, '/home');
-          } else if(selected == 1){
-            
-          }
-        });
-      },
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem( 
-            icon: Icon(FontAwesomeIcons.home),
-            title: Text('Home',
-                    style: GoogleFonts.quicksand(
-                            textStyle: TextStyle(color: Color(0xFF110133)),
-                          ),
-                      ),
-        ),
-          BottomNavigationBarItem(
-            icon: Icon(FontAwesomeIcons.bible),
-            title: Text('Read',
-                    style: GoogleFonts.quicksand(
-                              textStyle: TextStyle(color: Color(0xFF110133)),
-                              ),
-                            ),
-        ),
-          BottomNavigationBarItem(
-            icon: Icon(FontAwesomeIcons.book),
-            title: Text('Notes',
-                    style: GoogleFonts.quicksand(
-                                      textStyle: TextStyle(color: Color(0xFF110133)),
-                                      ),
-                                    ),
-                              
-          ),
+      final navigationProvider = Provider.of<NavigationProvider>(context);
+    return BubbleBottomBar(
+      
+        opacity: .2,
+        currentIndex: navigationProvider.selected,
+        onTap: (val) {
+          navigationProvider.updateBottomNavigation(val: val,context: context);
+        },
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+        elevation: 8,
+        fabLocation: BubbleBottomBarFabLocation.end, //new
+        hasNotch: true, //new
+        hasInk: true, //new, gives a cute ink effect
+        inkColor: Colors.black12, //optional, uses theme color if not specified
+        items: <BubbleBottomBarItem>[
+          BubbleBottomBarItem(
+              backgroundColor: Colors.red,
+              icon: Icon(
+                Icons.home,
+                color: Colors.black,
+              ),
+              activeIcon: Icon(
+                Icons.home,
+                color: Colors.red,
+              ),
+              title: Text("Home")),
+          BubbleBottomBarItem(
+              backgroundColor: Colors.deepPurple,
+              icon: Icon(
+                FlutterIcons.sun_faw5,
+                color: Colors.black,
+              ),
+              activeIcon: Icon(
+                 FlutterIcons.sun_faw5,
+                color: Colors.deepPurple,
+              ),
+              title: Text("Morning")),
+          BubbleBottomBarItem(
+              backgroundColor: Colors.indigo,
+              icon: Icon(
+                FlutterIcons.moon_ent,
+                color: Colors.black,
+              ),
+              activeIcon: Icon(
+               FlutterIcons.moon_ent,
+                color: Colors.indigo,
+              ),
+              title: Text("Evening")),
+          BubbleBottomBarItem(
+              backgroundColor: Colors.green,
+              icon: Icon(
+                Icons.menu,
+                color: Colors.black,
+              ),
+              activeIcon: Icon(
+                Icons.menu,
+                color: Colors.green,
+              ),
+              title: Text("Menu"))
         ],
       );
   }

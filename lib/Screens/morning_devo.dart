@@ -1,7 +1,12 @@
+import 'package:aha_app/Providers/navigationProvider.dart';
+import 'package:aha_app/Widgets/bottomBar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
+
+import 'package:provider/provider.dart';
 
 class MorningDevotion extends StatefulWidget {
   @override
@@ -11,45 +16,39 @@ class MorningDevotion extends StatefulWidget {
 class _MorningDevotionState extends State<MorningDevotion> {
   Future _makeRequest;
   @override
-  void initState() { 
+  void initState() {
     super.initState();
-    _makeRequest=makeRequest();
+    _makeRequest = makeRequest();
   }
+
   String output = '';
   String book = '';
   String chapter = '';
 
-
   @override
   Widget build(BuildContext context) {
+    final _navigationProvider = Provider.of<NavigationProvider>(context);
+    _navigationProvider.selected = 1;
     var size = MediaQuery.of(context).size;
     return Scaffold(
-      body: FutureBuilder(
-        future: _makeRequest,
-        builder: (context, snapshot) {
-          print(snapshot.data);
-          print(snapshot.connectionState);
-          if (snapshot.connectionState == ConnectionState.done &&
-              snapshot.hasData &&
-              snapshot.data != null) {
-                print('im here potato');
-             print(snapshot.data); 
-            return Container(
-              height: size.height,
-              width: size.width,
-              color: Colors.white,
-              child: Stack(
-                children: <Widget>[
-                  Positioned(top: 20, child: header(size: size)),
-                  Positioned(top: size.height * .25, child: body(size: size))
-                ],
-              ),
-            );
-          } else {
-            return Center(child: CircularProgressIndicator());
-          }
-        },
+      body: Container(
+        height: size.height,
+        width: size.width,
+        color: Colors.white,
+        child: Stack(
+          children: <Widget>[
+            Positioned(top: 20, child: header(size: size)),
+            Positioned(top: size.height * .25, child: body(size: size))
+          ],
+        ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: Icon(FlutterIcons.pencil_alt_faw5s),
+        backgroundColor: Colors.blueAccent,
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+      bottomNavigationBar: BottomBar(),
     );
   }
 
@@ -67,7 +66,7 @@ class _MorningDevotionState extends State<MorningDevotion> {
             decoration: BoxDecoration(
                 //color: Colors.white,
                 image: DecorationImage(
-                    image: AssetImage('assets/sun-icon.png'),
+                    image: AssetImage('assets/sun.png'),
                     fit: BoxFit.contain)),
           ),
           Padding(
@@ -82,27 +81,58 @@ class _MorningDevotionState extends State<MorningDevotion> {
   }
 
   body({@required size}) {
-    return Container(
-      color: Color.fromRGBO(255, 249, 249, 1),
-      width: size.width,
-      height: size.height * .6,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-        child: Scrollbar(
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                boldText(text: book +" " + chapter, fontSize: 35),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 25),
-                  child: boldText(text: output, fontSize: 20),
-                )
-              ],
+    return FutureBuilder(
+      future: _makeRequest,
+      builder: (context, snapshot){
+        if(snapshot.connectionState == ConnectionState.done &&
+              snapshot.hasData &&
+              snapshot.data != null) {
+          return Container(
+        color: Color.fromRGBO(255, 249, 249, 1),
+        width: size.width,
+        height: size.height * .6,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          child: Scrollbar(
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  boldText(text: book + " " + chapter, fontSize: 35),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 25),
+                    child: boldText(text: output, fontSize: 20),
+                  )
+                ],
+              ),
             ),
           ),
         ),
-      ),
+      );
+        }
+        else {
+            return Container(
+              height: size.height*.5,
+               width: size.width,
+                 color: Color.fromRGBO(255, 249, 249, 1),
+              child: Center(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircularProgressIndicator(
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Text('Please wait..getting data')
+                  ],
+                ),
+              ),
+            );
+          }
+      },
+        
     );
   }
 
@@ -115,7 +145,7 @@ class _MorningDevotionState extends State<MorningDevotion> {
     );
   }
   //le potato
-  
+
   Future<dynamic> makeRequest() async {
     print('fetching');
     String url =
@@ -125,20 +155,20 @@ class _MorningDevotionState extends State<MorningDevotion> {
       "x-rapidapi-key": "99cc147856msh74933134b391c20p1d97b4jsn5ca11ec7e543"
     });
     if (response.statusCode == 200) {
-     // return convert.jsonDecode(response.body);
-  
-     dynamic body = convert.jsonDecode(response.body);
-     // BibleModel.fromJson(body);
-     // print(body['Book']);
+      // return convert.jsonDecode(response.body);
+
+      dynamic body = convert.jsonDecode(response.body);
+      // BibleModel.fromJson(body);
+      // print(body['Book']);
       setState(() {
         output = body['Output'];
         chapter = body['Chapter'];
         book = body['Book'];
       });
-      return  convert.jsonDecode(response.body);
+      return convert.jsonDecode(response.body);
     } else {
       print('Request failed with status: ${response.statusCode}.');
     }
-      return null;
+    return null;
   }
 }

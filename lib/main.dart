@@ -1,5 +1,7 @@
+import 'package:aha_app/Providers/navigationProvider.dart';
 import 'package:aha_app/Screens/homepage.dart';
 import 'package:aha_app/Screens/morning_devo.dart';
+import 'package:aha_app/Screens/notesList.dart';
 import 'package:aha_app/Services/Api/sample_call.dart';
 import 'package:aha_app/Services/Routing/routes.dart';
 import 'package:flutter/material.dart';
@@ -46,12 +48,17 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        initialRoute: '/home',
-        onGenerateRoute: FluroRouter.router.generator,
-        home: Homepage(),
-      );
+    return MultiProvider(
+      providers: [
+         ListenableProvider<NavigationProvider>(create: (_) => NavigationProvider()),
+      ],
+          child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          onGenerateRoute: FluroRouter.router.generator,
+          home: Homepage(),
+          //home: NoteList(),
+        ),
+    );
   }
   
 }
