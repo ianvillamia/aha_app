@@ -24,7 +24,7 @@ class _HomepageState extends State<Homepage> {
         automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,
         title: Text(
-          'Devotional',
+          'Aha-Devotion',
           style: GoogleFonts.pacifico(
             textStyle: TextStyle(color: Color(0xFF110133)),
             fontSize: 25.0,

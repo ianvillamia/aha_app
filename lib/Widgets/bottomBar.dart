@@ -65,14 +65,14 @@ class _BottomBarState extends State<BottomBar> {
           BubbleBottomBarItem(
               backgroundColor: Colors.green,
               icon: Icon(
-                Icons.menu,
+             FlutterIcons.notebook_mco,
                 color: Colors.black,
               ),
               activeIcon: Icon(
-                Icons.menu,
+                   FlutterIcons.notebook_mco,
                 color: Colors.green,
               ),
-              title: Text("Menu"))
+              title: Text("Notes"))
         ],
       );
   }
