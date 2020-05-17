@@ -1,5 +1,6 @@
 import 'package:aha_app/Providers/navigationProvider.dart';
 import 'package:aha_app/Widgets/bottomBar.dart';
+import 'package:aha_app/Widgets/fab.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -42,11 +43,7 @@ class _EveningDevotionState extends State<EveningDevotion> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: Icon(FlutterIcons.pencil_alt_faw5s),
-        backgroundColor: Colors.blueAccent,
-      ),
+      floatingActionButton: FloatingButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       bottomNavigationBar: BottomBar(),
     );

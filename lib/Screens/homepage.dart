@@ -1,5 +1,6 @@
 import 'package:aha_app/Providers/navigationProvider.dart';
 import 'package:aha_app/Widgets/bottomBar.dart';
+import 'package:aha_app/Widgets/fab.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -19,6 +20,7 @@ class _HomepageState extends State<Homepage> {
     _navigationProvider.selected = 0;
     var size = MediaQuery.of(context).size;
     return Scaffold(
+
       backgroundColor: Colors.white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -103,11 +105,7 @@ class _HomepageState extends State<Homepage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: Icon(FlutterIcons.pencil_alt_faw5s),
-        backgroundColor: Colors.blueAccent,
-      ),
+      floatingActionButton: FloatingButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       bottomNavigationBar: BottomBar(),
     );

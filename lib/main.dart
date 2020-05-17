@@ -1,14 +1,16 @@
 import 'package:aha_app/Providers/navigationProvider.dart';
+import 'package:aha_app/Screens/aha_body.dart';
+import 'package:aha_app/Screens/aha_message.dart';
 import 'package:aha_app/Screens/homepage.dart';
 import 'package:aha_app/Screens/morning_devo.dart';
 import 'package:aha_app/Screens/notesList.dart';
 import 'package:aha_app/Services/Api/sample_call.dart';
 import 'package:aha_app/Services/Routing/routes.dart';
 import 'package:flutter/material.dart';
-// import 'package:aha_app/homepage.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+
 void main() {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
@@ -24,7 +26,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-    final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 
   @override
   void initState() {
@@ -40,25 +42,26 @@ class _MyAppState extends State<MyApp> {
       },
       onResume: (Map<String, dynamic> message) async {
         print("onResume: $message");
-      //  _navigateToItemDetail(message);
+        //  _navigateToItemDetail(message);
       },
     );
-    
   }
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-         ListenableProvider<NavigationProvider>(create: (_) => NavigationProvider()),
+        ListenableProvider<NavigationProvider>(
+            create: (_) => NavigationProvider()),
       ],
-          child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          onGenerateRoute: FluroRouter.router.generator,
-          home: Homepage(),
-          //home: NoteList(),
-        ),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        onGenerateRoute: FluroRouter.router.generator,
+        home: Homepage(),
+        // home: AhaBody(),
+        //home: NoteList(),
+        //home: AhaMessage(),
+      ),
     );
   }
-  
 }

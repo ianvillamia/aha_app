@@ -1,3 +1,4 @@
+import 'package:aha_app/Widgets/fab.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:aha_app/Widgets/bottomBar.dart';
@@ -55,11 +56,7 @@ class _NoteListState extends State<NoteList> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: Icon(Icons.add),
-        backgroundColor: Colors.red,
-      ),
+      floatingActionButton: FloatingButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
    bottomNavigationBar: BottomBar(),
     );
