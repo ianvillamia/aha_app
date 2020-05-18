@@ -1,9 +1,11 @@
 
+import 'package:aha_app/Providers/devotinalProvider.dart';
 import 'package:aha_app/Screens/aha_message.dart';
 import 'package:aha_app/Widgets/bottomBar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class AhaBody extends StatefulWidget {
   AhaBody({Key key}) : super(key: key);
@@ -15,6 +17,8 @@ class AhaBody extends StatefulWidget {
 class _AhaBodyState extends State<AhaBody> {
   @override
   Widget build(BuildContext context) {
+    
+          final _devotionalProvider = Provider.of<DevotionProvider>(context,listen: false);
     var size = MediaQuery.of(context).size;
 
     return Scaffold(
@@ -28,13 +32,14 @@ class _AhaBodyState extends State<AhaBody> {
                           child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                 
                   header(title: 'Day-68'),
                   SizedBox(height: size.height * .03),
-                  section(size: size, text: 'Awareness',bodyText: 'click to add...'),
+                  section(size: size, text: 'Awareness',bodyText: _devotionalProvider.awarenessController.text),
                   SizedBox(height: size.height * .03),
-                  section(size: size, text: 'Honesty',bodyText: 'click to add...'),
+                  section(size: size, text: 'Honesty',bodyText: _devotionalProvider.honestyController.text),
                   SizedBox(height: size.height * .03),
-                  section(size: size, text: 'Action',bodyText: 'click to add...')
+                  section(size: size, text: 'Action',bodyText:_devotionalProvider.actionController.text)
                 ],
               ),
             )),

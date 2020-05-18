@@ -1,3 +1,4 @@
+import 'package:aha_app/Providers/devotinalProvider.dart';
 import 'package:aha_app/Providers/navigationProvider.dart';
 import 'package:aha_app/Screens/aha_body.dart';
 import 'package:aha_app/Screens/aha_message.dart';
@@ -54,12 +55,15 @@ class _MyAppState extends State<MyApp> {
       providers: [
         ListenableProvider<NavigationProvider>(
             create: (_) => NavigationProvider()),
+        ChangeNotifierProvider<DevotionProvider>(
+          create: (_) => DevotionProvider(),
+        )
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         onGenerateRoute: FluroRouter.router.generator,
         home: Homepage(),
-       // home: DbTest(),
+        // home: DbTest(),
         // home: AhaBody(),
         //home: NoteList(),
         //home: AhaMessage(),

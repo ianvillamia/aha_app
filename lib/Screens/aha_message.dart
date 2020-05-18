@@ -1,6 +1,8 @@
+import 'package:aha_app/Providers/devotinalProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class AhaMessage extends StatefulWidget {
   final title;
@@ -13,21 +15,25 @@ class AhaMessage extends StatefulWidget {
 class _AhaMessageState extends State<AhaMessage> {
   String title;
   String subtext;
+  var localController;
   @override
   void initState() {
+       final _devotionalProvider = Provider.of<DevotionProvider>(context,listen: false);
     // TODO: implement initState
     super.initState();
     title = widget.title;
     switch (title.toLowerCase()) {
       case 'awareness':
         subtext = 'What is God trying to tell me?';
-
+      localController=_devotionalProvider.awarenessController;
         break;
       case 'honesty':
         subtext = 'What are the truths I have to accept and confess?';
+        localController=_devotionalProvider.honestyController;
         break;
       case 'action':
         subtext = 'What must I do now?';
+              localController=_devotionalProvider.actionController;
         break;
 
       default:
@@ -37,6 +43,7 @@ class _AhaMessageState extends State<AhaMessage> {
 
   @override
   Widget build(BuildContext context) {
+ 
     var size = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomPadding: false,
@@ -85,6 +92,7 @@ class _AhaMessageState extends State<AhaMessage> {
               child: Padding(
             padding: EdgeInsets.all(8.0),
             child: TextField(
+              controller: localController,
               maxLines: 8,
               decoration:
                   InputDecoration.collapsed(hintText: "Enter your text here"),

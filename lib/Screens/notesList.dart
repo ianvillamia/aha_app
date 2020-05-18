@@ -40,41 +40,49 @@ class _NoteListState extends State<NoteList> {
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               if (snapshot.hasData) {
-                return ListView.builder(
-                  itemCount: snapshot.data.length,
-                  itemBuilder: (_, int position) {
-                    print('position is$position');
-                    final item = snapshot.data[position];
-                    //get your item data here ...
-                    return cardItem(
-                        size: size, doc: snapshot, position: position);
-                  },
+                return SingleChildScrollView(
+                 child:  AnimationLimiter(
+                  child: GridView.builder(
+                    gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2),
+                 shrinkWrap: true,
+                physics: ScrollPhysics(),
+                    itemCount: snapshot.data.length,
+                    itemBuilder: (_, int position) {
+                      return AnimationConfiguration.staggeredList(
+                        position: position,
+                        duration: const Duration(milliseconds: 375),
+                        child: SlideAnimation(
+                          verticalOffset: 50.0,
+                          child: ScaleAnimation(
+                            child: cardItem(
+                                size: size, doc: snapshot, position: position),
+                          ),
+                        ),
+                      );
+                      // print('position is$position');
+                      // final item = snapshot.data[position];
+
+                      //get your item data here ...
+                      // return cardItem(
+                      //     size: size, doc: snapshot, position: position);
+                    },
+                  ),
+                )
+                );
+               
+              } else {
+                return Center(
+                  child: CircularProgressIndicator(),
                 );
               }
-               else{
-              return Center(child: CircularProgressIndicator(),);
-            }
-            }
-              else{
-              return Center(child: CircularProgressIndicator(),);
+            } else {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
             }
           }),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () async {
-          int i = await DatabaseHelper.instance.insert({
-            DatabaseHelper.columnTitle: DateTime.now().toString(),
-            DatabaseHelper.columnAwareness: 'now I see why it\'s scary',
-            DatabaseHelper.columnHonesty:
-                'the thought of losing someone you love',
-            DatabaseHelper.columnAction: 'pray'
-          }).then((value) {
-            setState(() {});
-            return null;
-          });
-          print('the inserted id is:$i');
-        },
-      ),
+      floatingActionButton: FloatingButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       bottomNavigationBar: BottomBar(),
     );
