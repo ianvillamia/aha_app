@@ -1,3 +1,4 @@
+import 'package:aha_app/Services/Local/db.dart';
 import 'package:aha_app/Widgets/fab.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
@@ -5,6 +6,7 @@ import 'package:aha_app/Widgets/bottomBar.dart';
 import 'package:aha_app/Providers/navigationProvider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+
 class NoteList extends StatefulWidget {
   NoteList({Key key}) : super(key: key);
 
@@ -17,7 +19,7 @@ class _NoteListState extends State<NoteList> {
   @override
   Widget build(BuildContext context) {
     final _navigationProvider = Provider.of<NavigationProvider>(context);
- _navigationProvider.selected = 3;
+    _navigationProvider.selected = 3;
     var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -32,37 +34,53 @@ class _NoteListState extends State<NoteList> {
         ),
         elevation: 0.0,
       ),
-      body: SingleChildScrollView(
-        child: AnimationLimiter(
-          child: Padding(
-            padding: const EdgeInsets.all(10),
-            child: Wrap(
-              children: AnimationConfiguration.toStaggeredList(
-                duration: const Duration(milliseconds: 500),
-                childAnimationBuilder: (widget) => ScaleAnimation(
-                  child: FadeInAnimation(
-                    child: widget,
-                  ),
-                ),
-                children: [
-                  cardItem(size: size), cardItem(size: size),
-                cardItem(size: size), cardItem(size: size),
-                cardItem(size: size), cardItem(size: size),
-                cardItem(size: size), cardItem(size: size),cardItem(size: size), cardItem(size: size),
-                cardItem(size: size), cardItem(size: size),
-                ],
-              ),
-            ),
-          ),
-        ),
+      body: FutureBuilder(
+          future: DatabaseHelper.instance.queryAll(),
+          initialData: List(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.hasData) {
+                return ListView.builder(
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (_, int position) {
+                    print('position is$position');
+                    final item = snapshot.data[position];
+                    //get your item data here ...
+                    return cardItem(
+                        size: size, doc: snapshot, position: position);
+                  },
+                );
+              }
+               else{
+              return Center(child: CircularProgressIndicator(),);
+            }
+            }
+              else{
+              return Center(child: CircularProgressIndicator(),);
+            }
+          }),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () async {
+          int i = await DatabaseHelper.instance.insert({
+            DatabaseHelper.columnTitle: DateTime.now().toString(),
+            DatabaseHelper.columnAwareness: 'now I see why it\'s scary',
+            DatabaseHelper.columnHonesty:
+                'the thought of losing someone you love',
+            DatabaseHelper.columnAction: 'pray'
+          }).then((value) {
+            setState(() {});
+            return null;
+          });
+          print('the inserted id is:$i');
+        },
       ),
-      floatingActionButton: FloatingButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-   bottomNavigationBar: BottomBar(),
+      bottomNavigationBar: BottomBar(),
     );
   }
 
-  cardItem({@required size}) {
+  cardItem({@required size, @required doc, @required position}) {
     return Container(
       // color: Colors.red,
       width: size.width * .45,
@@ -70,20 +88,31 @@ class _NoteListState extends State<NoteList> {
       child: Card(
         child: InkWell(
           splashColor: Colors.blue,
-          onTap: (){
-            
-          },
+          onTap: () {},
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Stack(children: [
-              Align(alignment: Alignment.topLeft,child: Text('title'),),
-              Align(alignment: Alignment.center,child: Text('Body....'),),
-              Align(alignment: Alignment.bottomRight,child: Text('.:. click'),),
-            ],),
+            child: Stack(
+              children: [
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    doc.data[position].row[1].toString(),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: Text('Body....'),
+                ),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: Text('.:. click'),
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
-
 }

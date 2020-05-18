@@ -1,4 +1,5 @@
 import 'package:aha_app/Providers/navigationProvider.dart';
+import 'package:aha_app/Widgets/bibleVersion.dart';
 import 'package:aha_app/Widgets/bottomBar.dart';
 import 'package:aha_app/Widgets/fab.dart';
 import 'package:flutter/material.dart';
@@ -39,11 +40,16 @@ class _MorningDevotionState extends State<MorningDevotion> {
         child: Stack(
           children: <Widget>[
             Positioned(top: 20, child: header(size: size)),
-            Positioned(top: size.height * .25, child: body(size: size))
+            Positioned(top: size.height * .25, child: body(size: size)),
+            Positioned(
+              top: size.height * .2,
+              right: 0,
+              child: Container(child: BibleDropDown()),
+            )
           ],
         ),
       ),
-          floatingActionButton: FloatingButton(),
+      floatingActionButton: FloatingButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       bottomNavigationBar: BottomBar(),
     );
@@ -63,8 +69,7 @@ class _MorningDevotionState extends State<MorningDevotion> {
             decoration: BoxDecoration(
                 //color: Colors.white,
                 image: DecorationImage(
-                    image: AssetImage('assets/sun.png'),
-                    fit: BoxFit.contain)),
+                    image: AssetImage('assets/sun.png'), fit: BoxFit.contain)),
           ),
           Padding(
             padding: EdgeInsets.only(left: 10),
@@ -80,56 +85,53 @@ class _MorningDevotionState extends State<MorningDevotion> {
   body({@required size}) {
     return FutureBuilder(
       future: _makeRequest,
-      builder: (context, snapshot){
-        if(snapshot.connectionState == ConnectionState.done &&
-              snapshot.hasData &&
-              snapshot.data != null) {
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done &&
+            snapshot.hasData &&
+            snapshot.data != null) {
           return Container(
-        color: Color.fromRGBO(255, 249, 249, 1),
-        width: size.width,
-        height: size.height * .6,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-          child: Scrollbar(
-            child: SingleChildScrollView(
+            color: Color.fromRGBO(255, 249, 249, 1),
+            width: size.width,
+            height: size.height * .6,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              child: Scrollbar(
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      boldText(text: book + " " + chapter, fontSize: 35),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 25),
+                        child: boldText(text: output, fontSize: 20),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          );
+        } else {
+          return Container(
+            height: size.height * .5,
+            width: size.width,
+            color: Color.fromRGBO(255, 249, 249, 1),
+            child: Center(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  boldText(text: book + " " + chapter, fontSize: 35),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 25),
-                    child: boldText(text: output, fontSize: 20),
-                  )
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircularProgressIndicator(),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text('Please wait..getting data')
                 ],
               ),
             ),
-          ),
-        ),
-      );
+          );
         }
-        else {
-            return Container(
-              height: size.height*.5,
-               width: size.width,
-                 color: Color.fromRGBO(255, 249, 249, 1),
-              child: Center(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CircularProgressIndicator(
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Text('Please wait..getting data')
-                  ],
-                ),
-              ),
-            );
-          }
       },
-        
     );
   }
 

@@ -6,6 +6,7 @@ import 'package:aha_app/Screens/morning_devo.dart';
 import 'package:aha_app/Screens/notesList.dart';
 import 'package:aha_app/Services/Api/sample_call.dart';
 import 'package:aha_app/Services/Routing/routes.dart';
+import 'package:aha_app/db_testing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -58,6 +59,7 @@ class _MyAppState extends State<MyApp> {
         debugShowCheckedModeBanner: false,
         onGenerateRoute: FluroRouter.router.generator,
         home: Homepage(),
+       // home: DbTest(),
         // home: AhaBody(),
         //home: NoteList(),
         //home: AhaMessage(),
