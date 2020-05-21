@@ -41,11 +41,7 @@ class _MorningDevotionState extends State<MorningDevotion> {
           children: <Widget>[
             Positioned(top: 20, child: header(size: size)),
             Positioned(top: size.height * .25, child: body(size: size)),
-            Positioned(
-              top: size.height * .2,
-              right: 0,
-              child: Container(child: BibleDropDown()),
-            )
+        
           ],
         ),
       ),
@@ -86,8 +82,11 @@ class _MorningDevotionState extends State<MorningDevotion> {
     return FutureBuilder(
       future: _makeRequest,
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done &&
-            snapshot.hasData &&
+        print(snapshot.connectionState);
+        print(snapshot.hasData);
+        print(snapshot.data);
+        if (snapshot.connectionState == ConnectionState.done ||
+            snapshot.hasData ||
             snapshot.data != null) {
           return Container(
             color: Color.fromRGBO(255, 249, 249, 1),
@@ -147,11 +146,22 @@ class _MorningDevotionState extends State<MorningDevotion> {
 
   Future<dynamic> makeRequest() async {
     print('fetching');
-    String url =
-        'https://ajith-holy-bible.p.rapidapi.com/GetChapter?Book=Genesis&chapter=8';
-    var response = await http.get(Uri.encodeFull(url), headers: {
-      "x-rapidapi-host": "ajith-holy-bible.p.rapidapi.com",
-      "x-rapidapi-key": "99cc147856msh74933134b391c20p1d97b4jsn5ca11ec7e543"
+    // String url = 'https://api.esv.org/v3/passage/text/?q=John+11';
+    var uri = Uri.parse('https://api.esv.org/v3/passage/text');
+    uri = uri.replace(queryParameters: <String, String>{
+      'q': 'John+11',
+      'indent-using': '    ',
+      'indent-paragraphs': '2',
+      'include-footnotes': 'false',
+      'include-first-verse-numbers': 'false',
+      // 'include-headings':'false',
+      'include-short-copyright': 'false'
+    });
+    print(uri);
+    var response = await http.get(uri, headers: {
+      'Authorization': 'c0d6f0b7a1bedbbcdf0aeeb77377d14c79e78c5e'
+      //  "x-rapidapi-host": "ajith-holy-bible.p.rapidapi.com",
+      //  "x-rapidapi-key": "99cc147856msh74933134b391c20p1d97b4jsn5ca11ec7e543"
     });
     if (response.statusCode == 200) {
       // return convert.jsonDecode(response.body);
@@ -159,12 +169,19 @@ class _MorningDevotionState extends State<MorningDevotion> {
       dynamic body = convert.jsonDecode(response.body);
       // BibleModel.fromJson(body);
       // print(body['Book']);
+      print(body['passages']);
       setState(() {
-        output = body['Output'];
-        chapter = body['Chapter'];
-        book = body['Book'];
+        // print('calling setstate');
+        // chapter = 'chapter';
+        //book = 'book';
+        var listToString = body['passages'].toString();
+        //   print(body['passages'].runtimeType);
+        output = listToString.replaceFirst("[", '');
+        // output = body['Output'];
+        // chapter = body['Chapter'];
+        // book = body['Book'];
       });
-      return convert.jsonDecode(response.body);
+      return body;
     } else {
       print('Request failed with status: ${response.statusCode}.');
     }

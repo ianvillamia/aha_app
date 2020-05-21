@@ -32,7 +32,6 @@ class _AhaBodyState extends State<AhaBody> {
                           child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                 
                   header(title: 'Day-68'),
                   SizedBox(height: size.height * .03),
                   section(size: size, text: 'Awareness',bodyText: _devotionalProvider.awarenessController.text),
