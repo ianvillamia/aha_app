@@ -1,8 +1,8 @@
 import 'package:aha_app/Services/Local/db.dart';
-import 'package:aha_app/Widgets/fab.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:aha_app/Widgets/bottomBar.dart';
+
 import 'package:aha_app/Providers/navigationProvider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -18,8 +18,6 @@ class _NoteListState extends State<NoteList> {
   int _selected = 0;
   @override
   Widget build(BuildContext context) {
-    final _navigationProvider = Provider.of<NavigationProvider>(context);
-    _navigationProvider.selected = 3;
     var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -41,12 +39,12 @@ class _NoteListState extends State<NoteList> {
             if (snapshot.connectionState == ConnectionState.done) {
               if (snapshot.hasData) {
                 return SingleChildScrollView(
-                 child:  AnimationLimiter(
+                    child: AnimationLimiter(
                   child: GridView.builder(
                     gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2),
-                 shrinkWrap: true,
-                physics: ScrollPhysics(),
+                        crossAxisCount: 2),
+                    shrinkWrap: true,
+                    physics: ScrollPhysics(),
                     itemCount: snapshot.data.length,
                     itemBuilder: (_, int position) {
                       return AnimationConfiguration.staggeredList(
@@ -68,9 +66,7 @@ class _NoteListState extends State<NoteList> {
                       //     size: size, doc: snapshot, position: position);
                     },
                   ),
-                )
-                );
-               
+                ));
               } else {
                 return Center(
                   child: CircularProgressIndicator(),
@@ -82,9 +78,6 @@ class _NoteListState extends State<NoteList> {
               );
             }
           }),
-      floatingActionButton: FloatingButton(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      bottomNavigationBar: BottomBar(),
     );
   }
 

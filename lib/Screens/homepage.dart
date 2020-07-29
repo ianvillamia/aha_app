@@ -1,6 +1,6 @@
 import 'package:aha_app/Providers/navigationProvider.dart';
-import 'package:aha_app/Widgets/bottomBar.dart';
-import 'package:aha_app/Widgets/fab.dart';
+import 'package:aha_app/Screens/body.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -16,11 +16,8 @@ class Homepage extends StatefulWidget {
 class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
-    final _navigationProvider = Provider.of<NavigationProvider>(context);
-    _navigationProvider.selected = 0;
     var size = MediaQuery.of(context).size;
     return Scaffold(
-
       backgroundColor: Colors.white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -51,16 +48,25 @@ class _HomepageState extends State<Homepage> {
                       image: 'assets/sun-cloud.png',
                       size: size,
                       function: () {
-                        _navigationProvider.updateBottomNavigation(
-                            val: 1, context: context);
+                        //call page view
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Body(
+                                      page: 1,
+                                    )));
                       }),
                   customCards(
                     title: 'Evening\nDevotion',
                     image: 'assets/moon-stars.png',
                     size: size,
                     function: () {
-                      _navigationProvider.updateBottomNavigation(
-                          val: 2, context: context);
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Body(
+                                    page: 2,
+                                  )));
                     },
                   ),
                 ],
@@ -73,7 +79,14 @@ class _HomepageState extends State<Homepage> {
                   padding: EdgeInsets.symmetric(horizontal: 10),
                   child: Card(
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Body(
+                                      page: 3,
+                                    )));
+                      },
                       splashColor: Colors.blue,
                       child: Padding(
                         padding: const EdgeInsets.all(10),
@@ -90,8 +103,8 @@ class _HomepageState extends State<Homepage> {
                             Align(
                                 alignment: Alignment.center,
                                 child: Container(
-                                  width: 130,
-                                  child: Image.asset('assets/edit.png'))),
+                                    width: 130,
+                                    child: Image.asset('assets/edit.png'))),
                             Align(
                               alignment: Alignment.bottomRight,
                               child: Text('~click me'),
@@ -105,9 +118,6 @@ class _HomepageState extends State<Homepage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingButton(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      bottomNavigationBar: BottomBar(),
     );
   }
 

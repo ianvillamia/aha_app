@@ -1,7 +1,6 @@
 import 'package:aha_app/Providers/navigationProvider.dart';
 import 'package:aha_app/Widgets/bibleVersion.dart';
-import 'package:aha_app/Widgets/bottomBar.dart';
-import 'package:aha_app/Widgets/fab.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -29,8 +28,6 @@ class _MorningDevotionState extends State<MorningDevotion> {
 
   @override
   Widget build(BuildContext context) {
-    final _navigationProvider = Provider.of<NavigationProvider>(context);
-    _navigationProvider.selected = 1;
     var size = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(
@@ -41,13 +38,9 @@ class _MorningDevotionState extends State<MorningDevotion> {
           children: <Widget>[
             Positioned(top: 20, child: header(size: size)),
             Positioned(top: size.height * .25, child: body(size: size)),
-        
           ],
         ),
       ),
-      floatingActionButton: FloatingButton(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      bottomNavigationBar: BottomBar(),
     );
   }
 

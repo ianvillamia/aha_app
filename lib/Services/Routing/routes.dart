@@ -31,7 +31,11 @@ class FluroRouter {
   //       Loading());
   static void setupRouter() {
     // router.define("/login", handler: _loginHandler, transitionType: TransitionType.inFromRight,);
-    router.define("/home", handler: _homepageHandler);
+    router.define(
+      "/home",
+      handler: _homepageHandler,
+      transitionType: TransitionType.cupertino,
+    );
     router.define(
       "/morningDevo",
       handler: _morningDevotionHandler,

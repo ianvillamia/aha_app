@@ -2,6 +2,7 @@ import 'package:aha_app/Providers/devotinalProvider.dart';
 import 'package:aha_app/Providers/navigationProvider.dart';
 import 'package:aha_app/Screens/aha_body.dart';
 import 'package:aha_app/Screens/aha_message.dart';
+import 'package:aha_app/Screens/body.dart';
 import 'package:aha_app/Screens/homepage.dart';
 import 'package:aha_app/Screens/morning_devo.dart';
 import 'package:aha_app/Screens/notesList.dart';
@@ -62,7 +63,7 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         onGenerateRoute: FluroRouter.router.generator,
-        home: Homepage(),
+        home: Body(),
         // home: DbTest(),
         // home: AhaBody(),
         //home: NoteList(),
